@@ -1,6 +1,5 @@
 import logo from "./logo.svg";
 import "./App.css";
-import "./output.css";
 import PlaylistConverter from "./components/PlaylistConverter.jsx";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";

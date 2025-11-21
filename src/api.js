@@ -1,10 +1,4 @@
-import * as auth from "https://unpkg.com/@tidal-music/auth/dist";
-import { createAPIClient } from "https://unpkg.com/@tidal-music/api/dist";
-
-const rootPath = "http://localhost:8081"; // where the Node API is hosted
-
-const clientId = "LeKvdpothKDxsMmM";
-const clientSecret = "2PjSfxB3uafalbKKCc4N8wyJrkLmGWWGj4VwRBeBQss=";
+const rootPath = "https://kk3lcd2z76.execute-api.us-east-2.amazonaws.com"; // where the Node API is hosted
 
 const fetchWithCookies = async function (url) {
   return fetch(url, { credentials: "include" });
@@ -141,6 +135,7 @@ export const scrapeLowestBandcampPrice = async function (links) {
 };
 
 export async function setupTidal() {
+  /*
   try {
     console.log("Tidal Auth starting");
     let res = await auth.init({
@@ -230,4 +225,6 @@ export async function setupTidal() {
     console.log("error.cause -> ", e.cause);
     console.log("error.message -> ", e.message);
   }
+
+  */
 }
