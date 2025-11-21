@@ -37,7 +37,7 @@ function TransferForm({
               destination == null || destination === "Choose Destination"
             }
           >
-            Login to Account
+            {destination === "Tidal" ? "Login to Tidal" : "Login to Account"}
           </button>
         )}
       </div>

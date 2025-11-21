@@ -11,9 +11,12 @@ function BandcampSourceTable({ trackData, totalCost }) {
       </h1>
       <div
         id="bandcamp-table"
-        className="m-auto max-h-75 overflow-y-auto inline-block"
+        className="shadow-md  m-auto max-h-75 overflow-y-auto inline-block"
       >
-        <table id="track-table" className="m-auto text-left table-auto border">
+        <table
+          id="track-table"
+          className="p-5 m-auto text-left table-auto border"
+        >
           <thead>
             <tr className="text-left sticky top:0">
               <th>Order</th>

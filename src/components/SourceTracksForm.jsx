@@ -20,7 +20,7 @@ function SourceTracksForm({
       <select
         id="source-selector"
         value={source}
-        className="m-20 p-3 lg:w-150 sm:w-75 sm:text-2xl md:text-4xl text-blue-800 text-center border-2 rounded-xl h-20 bg-white"
+        className="shadow-xl m-20 p-3 lg:w-150 sm:w-75 sm:text-2xl md:text-4xl text-blue-800 text-center border-2 rounded-xl h-20 bg-white"
         onChange={onSelectionChange}
       >
         <option>Select Source</option>

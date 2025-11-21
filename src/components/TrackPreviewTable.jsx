@@ -2,7 +2,7 @@ function TrackPreviewTable({ trackData }) {
   return (
     <div
       id="track-preview-table"
-      className="m-auto max-h-75 overflow-y-auto inline-block"
+      className="border-2 shadow-md m-auto max-h-75 overflow-y-auto inline-block"
     >
       <table
         style={{}}
