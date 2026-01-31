@@ -1,6 +1,8 @@
 import logo from "./logo.svg";
 import "./App.css";
+import "./output.css";
 import PlaylistConverter from "./components/PlaylistConverter.jsx";
+import MissingPage from "./components/MissingPage.jsx";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -25,6 +27,7 @@ function App() {
             path="/playlist"
             element={<PlaylistConverter key={converterKey} />}
           />
+          <Route path="*" element={<MissingPage></MissingPage>} />
         </Routes>
       </BrowserRouter>
     </div>
