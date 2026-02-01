@@ -4,9 +4,6 @@ import { createAPIClient } from "https://unpkg.com/@tidal-music/api/dist";
 
 const rootPath = process.env.REACT_APP_API_ROOT_PATH; // where the Node API is hosted
 
-const clientId = "LeKvdpothKDxsMmM";
-const clientSecret = "2PjSfxB3uafalbKKCc4N8wyJrkLmGWWGj4VwRBeBQss=";
-
 const fetchWithCookies = async function (url) {
   return fetch(url, { credentials: "include" });
 };
@@ -150,95 +147,3 @@ export const scrapeLowestBandcampPrice = async function (links) {
     console.log("Failed to gather Bandcamp price data", e);
   }
 };
-
-export async function setupTidal() {
-  try {
-    console.log("Tidal Auth starting");
-    let res = await auth.init({
-      clientId,
-      clientSecret,
-      credentialsStorageKey: "key",
-      scopes: [],
-    });
-
-    console.log("Tidal Auth processing");
-    // await setCredentialsProvider(auth.credentialsProvider);
-
-    const apiClient = await createAPIClient(auth.credentialsProvider);
-    const credentials = await auth.credentialsProvider.getCredentials();
-
-    console.log("response: ", res);
-    console.log("credentials: ", credentials);
-    console.log("apiClient: ", apiClient);
-
-    // Example of an API request
-    await getAlbum("75413011");
-    // await createPlaylist();
-
-    console.log("Redirecting to Tidal Login");
-
-    // await loginUser();
-
-    console.log("Tidal Auth complete");
-
-    async function loginUser() {
-      //TODO store local state so that whe you return to this site, you still have
-      // the original Spotify playlist ID and you also have
-      // a flag that indicates a successful auth to Tidal
-
-      const redirectUri = "http://localhost:3000/playlist";
-      const loginUrl = await auth.initializeLogin({
-        redirectUri,
-      });
-
-      window.open(loginUrl, "_self");
-    }
-
-    async function getAlbum(id) {
-      const { data, error } = await apiClient.GET("/albums/{id}", {
-        params: {
-          path: { id },
-          query: { countryCode: "NO" },
-        },
-      });
-
-      if (error) {
-        error.errors.forEach(
-          // err => (results.innerHTML += `<li>${err.detail}</li>`),
-          (err) => console.log
-        );
-      } else {
-        // for (const [key, value] of Object.entries(data.data.attributes)) {
-        //     results.innerHTML += `<li><b>${key}:</b>${JSON.stringify(value)}</li>`;
-        // }
-        console.log("testAlbum: ", data);
-      }
-    }
-
-    async function createPlaylist() {
-      const { data, error } = await apiClient.POST("/playlists", {
-        params: {
-          query: { countryCode: "US" },
-        },
-        requestBody: {
-          data: {
-            attributes: {
-              accessType: "PUBLIC",
-              description: "string",
-              name: "test_gap01",
-            },
-            type: "playlists",
-          },
-        },
-      });
-
-      if (error) {
-        error.errors.forEach(console.log);
-      } else console.log("playlist creation output : ", data);
-    }
-  } catch (e) {
-    console.log("error -> ", e);
-    console.log("error.cause -> ", e.cause);
-    console.log("error.message -> ", e.message);
-  }
-}
