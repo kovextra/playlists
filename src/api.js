@@ -11,7 +11,7 @@ export const requestPlaylistFromSpotify = async function (playlistId) {
   let response = await fetchWithCookies(url);
   let jsonData = await response.json();
   console.log(`"${jsonData.name}" playlist received`);
-  // the code regex replace code in the following line is intended to prevent HTML injection
+  // the regex replace code in the following line is intended to prevent HTML injection
   return response.status == 200
     ? {
         notification: {
@@ -36,7 +36,7 @@ export const requestPlaylistFromSpotify = async function (playlistId) {
 export const requestAllYoutubeConversions = function (trackData, callback) {
   if (!trackData || trackData.length == 0) return;
 
-  const endpoint = rootPath + "/convert-yt";
+  const endpoint = rootPath + "/yt-conversion";
 
   // construct an array of Promises (fetch calls)
   // perform up to 3 retries for youtube links
