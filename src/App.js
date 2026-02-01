@@ -16,7 +16,10 @@ function App() {
           className="m-5 text-xl"
           onClick={() => setConverterKey((i) => i + 1)}
         >
-          <img src="../stopify-images/stopify-21.png" className="ml-7" />
+          <img
+            src={`${process.env.PUBLIC_URL}/stopify-images/stopify-21.png`}
+            className="ml-7"
+          />
         </Link>
       </nav>
       <Routes>
