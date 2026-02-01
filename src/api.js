@@ -143,3 +143,7 @@ export const scrapeLowestBandcampPrice = async function (links) {
     console.log("Failed to gather Bandcamp price data", e);
   }
 };
+
+export const setupTidal = async function () {
+  return false;
+};
