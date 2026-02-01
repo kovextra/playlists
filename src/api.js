@@ -1,7 +1,3 @@
-import * as auth from "https://unpkg.com/@tidal-music/auth/dist";
-import { createAPIClient } from "https://unpkg.com/@tidal-music/api/dist";
-// import dotenv from "dotenv";
-
 const rootPath = process.env.REACT_APP_API_ROOT_PATH; // where the Node API is hosted
 
 const fetchWithCookies = async function (url) {
