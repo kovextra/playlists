@@ -1,7 +1,8 @@
 import * as auth from "https://unpkg.com/@tidal-music/auth/dist";
 import { createAPIClient } from "https://unpkg.com/@tidal-music/api/dist";
+// import dotenv from "dotenv";
 
-const rootPath = "http://localhost:8081"; // where the Node API is hosted
+const rootPath = process.env.REACT_APP_API_ROOT_PATH; // where the Node API is hosted
 
 const clientId = "LeKvdpothKDxsMmM";
 const clientSecret = "2PjSfxB3uafalbKKCc4N8wyJrkLmGWWGj4VwRBeBQss=";
@@ -11,7 +12,7 @@ const fetchWithCookies = async function (url) {
 };
 
 export const requestPlaylistFromSpotify = async function (playlistId) {
-  console.log("Preparing to request to localhost:8081/playlist");
+  console.log(`Preparing to request to ${rootPath}`);
   let url = new URL(rootPath + "/playlist");
   url.search = new URLSearchParams({ id: playlistId }).toString();
   let response = await fetchWithCookies(url);
@@ -43,34 +44,38 @@ export const requestAllYoutubeConversions = function (trackData, callback) {
   if (!trackData || trackData.length == 0) return;
 
   const endpoint = rootPath + "/convert-yt";
-  // resetProgressBar();
-  // updateProgressDisplay(0);
 
   // construct an array of Promises (fetch calls)
   // perform up to 3 retries for youtube links
+  // we send separate requests so that we can track independent returns and incremental progress
   const youtubeConversionPromises = trackData.map((track) => {
     let nameParam = `${track.artists}-${track.songName}`;
 
     return new Promise((resolve, reject) => {
-      let successCase = () => {
+      let evaluateApiResult = (response) => {
+        if (!response.ok) return reject("Failed to download song " + nameParam);
         callback && callback();
-        resolve();
+        return resolve();
       };
       findYoutubeLinks(track)
         .then((links) => {
           fetchWithCookies(`${endpoint}?url=${links[0]}&name=${nameParam}`)
-            .then(successCase)
+            .then(evaluateApiResult)
             .catch(() =>
               fetchWithCookies(`${endpoint}?url=${links[1]}&name=${nameParam}`)
-                .then(successCase)
+                .then(evaluateApiResult)
                 .catch(() =>
                   fetchWithCookies(
                     `${endpoint}?url=${links[2]}&name=${nameParam}`
-                  ).then(successCase)
+                  ).then(evaluateApiResult)
                 )
             );
         })
-        .catch((e) => reject("Failed to convert after 3 link attempts. " + e));
+        .catch((e) =>
+          reject(
+            `Failed to convert after 3 link attempts for song ${nameParam}. ${e}`
+          )
+        );
     });
   });
 
@@ -90,6 +95,10 @@ export const findYoutubeLinks = async function (track) {
     const response = await fetchWithCookies(
       `${rootPath}/gapi-search?q=${track.songName} ${track.artists}`
     );
+    if (!response.ok)
+      throw new Error(
+        `Youtube API request failed with status ${response.status}`
+      );
     const threeYoutubeIdsFromSearch = await response.json();
     console.log(
       `Retrieved Youtube IDs for ${track.songName} - ${track.artists}: ${threeYoutubeIdsFromSearch}`
@@ -114,12 +123,12 @@ export const findBandcampLinks = async function (trackData) {
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok)
+      throw new Error(`Bandcamp request failed with status ${response.status}`);
     let jsonData = await response.json();
     console.log(`Bandcamp response:`);
     console.log(jsonData);
     return jsonData;
-    // let sourcedTrackCount = buildBandcampTable(jsonData);
-    // return sourcedTrackCount;
   } catch (e) {
     console.log(`Bandcamp communication failed - ${e}`);
   }
@@ -134,6 +143,8 @@ export const scrapeLowestBandcampPrice = async function (links) {
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok)
+      throw new Error(`Bandcamp request failed with status ${response.status}`);
     return response.text();
   } catch (e) {
     console.log("Failed to gather Bandcamp price data", e);

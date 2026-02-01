@@ -10,6 +10,7 @@
     --color-emerald-200: oklch(90.5% 0.093 164.15);
     --color-blue-50: oklch(97% 0.014 254.604);
     --color-blue-800: oklch(42.4% 0.199 265.638);
+    --color-indigo-300: oklch(78.5% 0.115 274.713);
     --color-slate-800: oklch(27.9% 0.041 260.031);
     --color-black: #000;
     --color-white: #fff;
@@ -34,6 +35,7 @@
     --text-8xl--line-height: 1;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --default-transition-duration: 150ms;
@@ -263,6 +265,9 @@
   .table-auto {
     table-layout: auto;
   }
+  .border-separate {
+    border-collapse: separate;
+  }
   .overflow-y-auto {
     overflow-y: auto;
   }
@@ -271,6 +276,10 @@
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
+  }
+  .rounded-t-lg {
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -335,6 +344,14 @@
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-5xl {
+    font-size: var(--text-5xl);
+    line-height: var(--tw-leading, var(--text-5xl--line-height));
+  }
   .text-7xl {
     font-size: var(--text-7xl);
     line-height: var(--tw-leading, var(--text-7xl--line-height));
@@ -391,6 +408,13 @@
   .odd\:bg-white {
     &:nth-child(odd) {
       background-color: var(--color-white);
+    }
+  }
+  .hover\:bg-indigo-300 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-indigo-300);
+      }
     }
   }
   .disabled\:pointer-events-none {

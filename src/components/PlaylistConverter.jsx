@@ -112,13 +112,15 @@ function PlaylistConverter() {
   }
 
   async function sourceFromYoutube() {
+    let failScenario = false;
+    let downloadPromises;
     try {
       setNotification({
         type: "good",
         message: "Connecting to YouTube sourcing service",
       });
       setNumberOfTracksLoaded(0);
-      let promises = requestAllYoutubeConversions(
+      downloadPromises = requestAllYoutubeConversions(
         trackData,
         incrementTrackLoadingProgress
       );
@@ -127,7 +129,7 @@ function PlaylistConverter() {
         type: "good",
         message: "Downloading tracks",
       });
-      await Promise.all(promises);
+      await Promise.all(downloadPromises);
       // then call to pull the whole compressed folder
       setNotification({
         type: "good",
@@ -135,14 +137,17 @@ function PlaylistConverter() {
       });
       console.log("Promises all completed");
     } catch (error) {
+      failScenario = true;
       setNotification({
         type: "bad",
-        message: "Failed to load tracks from Youtube.",
+        message: "Failed to source tracks from Youtube.",
       });
       console.error("Failed to source tracks from Youtube: " + error);
-      return;
+      await Promise.allSettled(downloadPromises); // wait for all to finish, even in failure
     }
 
+    // Regardless of success or failure scenario, we still allow a zip attempt,
+    // because some of the tracks may have successfully loaded
     try {
       let url = await fetchZipForPlaylist(playlistData.name);
       const a = document.createElement("a");
@@ -152,7 +157,9 @@ function PlaylistConverter() {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-      setNotification({ type: "good", message: "Download Completed" });
+
+      if (!failScenario)
+        setNotification({ type: "good", message: "Download Completed" });
     } catch (error) {
       setNotification({
         type: "bad",
@@ -235,6 +242,7 @@ function PlaylistConverter() {
       onNotify={setNotification}
       status={status}
       onTransfer={toggleTransferMode}
+      tracksShowing={showTracks}
     />
   ) : null;
 
@@ -310,34 +318,6 @@ function PlaylistConverter() {
         {trackTableComponents}
       </div>
     );
-
-  // return (
-  //   <div className="p-10">
-  //     {/* <a href="PlaylistConverter.jsx">HOME</a> */}
-
-  //     {hideTitle ? (
-  //       <div />
-  //     ) : (
-  //       <h1 id="landing-title" className="major-title">
-  //         Spotify Playlist Converter
-  //       </h1>
-  //     )}
-  //     {playlistData ? (
-  //       <>
-  //         <PlaylistDisplay playlistData={playlistData} />
-  //       </>
-  //     ) : (
-  //       <PlaylistInput onSubmit={onSubmitPlaylist} onNotify={setNotification} />
-  //     )}
-  //     {notification ? <NotificationBar notification={notification} /> : null}
-  //     {playlistData ? (
-  //       <PlaylistToolbar onListTracks={toggleTrackPreview} />
-  //     ) : null}
-  //     {showTracks ? (
-  //       <TrackPreviewTable trackData={trackData}></TrackPreviewTable>
-  //     ) : null}
-  //   </div>
-  // );
 }
 
 export default PlaylistConverter;

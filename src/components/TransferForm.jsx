@@ -37,7 +37,8 @@ function TransferForm({
               destination == null || destination === "Choose Destination"
             }
           >
-            Login to Account
+            Login to{" "}
+            {destination === "Choose Destination" ? "Account" : destination}
           </button>
         )}
       </div>

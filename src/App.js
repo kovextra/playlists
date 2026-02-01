@@ -4,6 +4,7 @@ import "./output.css";
 import PlaylistConverter from "./components/PlaylistConverter.jsx";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { useState } from "react";
+import MissingPage from "./components/MissingPage.jsx";
 
 // TODO : set up a session token here and put it as key to the PlaylistConverter component
 function App() {
@@ -26,6 +27,7 @@ function App() {
             path="/playlist"
             element={<PlaylistConverter key={converterKey} />}
           />
+          <Route path="*" element={<MissingPage></MissingPage>} />
         </Routes>
       </BrowserRouter>
     </div>

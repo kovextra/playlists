@@ -1,5 +1,6 @@
 function PlaylistToolbar(props) {
-  const { onListTracks, onNotify, onSourceTracks, onTransfer } = props;
+  const { onListTracks, onNotify, onSourceTracks, onTransfer, tracksShowing } =
+    props;
 
   function clearNotificationsThenCall(callback) {
     onNotify(null);
@@ -13,7 +14,7 @@ function PlaylistToolbar(props) {
         className="playlist-buttons"
         onClick={() => clearNotificationsThenCall(onListTracks)}
       >
-        List Tracks
+        {tracksShowing ? "Hide Tracks" : "See Tracks"}
       </button>
       <button
         id="source-mode-button"

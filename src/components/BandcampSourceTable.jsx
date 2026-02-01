@@ -13,9 +13,12 @@ function BandcampSourceTable({ trackData, totalCost }) {
         id="bandcamp-table"
         className="m-auto max-h-75 overflow-y-auto inline-block"
       >
-        <table id="track-table" className="m-auto text-left table-auto border">
-          <thead>
-            <tr className="text-left sticky top:0">
+        <table
+          id="track-table"
+          className="m-auto text-left table-auto border-2 border-separate rounded-t-lg"
+        >
+          <thead className="rounded-t-lg">
+            <tr className="text-left sticky top:0 rounded-t-lg">
               <th>Order</th>
               <th>Song Name</th>
               <th>Artist</th>
@@ -26,7 +29,7 @@ function BandcampSourceTable({ trackData, totalCost }) {
             {trackData.map((track) => (
               <tr
                 key={track.order}
-                className="odd:bg-[var(--translucent-white)]"
+                className="odd:bg-[var(--translucent-white)] hover:bg-indigo-300"
               >
                 <td>{track.order}</td>
                 <td>{track.songName}</td>
