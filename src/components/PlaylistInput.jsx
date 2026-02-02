@@ -87,7 +87,7 @@ function PlaylistInput(props) {
         id="link-input"
         ref={inputRef}
         type="text"
-        className="text-2xl bg-blue-50"
+        className="sm:text-sm md:text-2xl bg-blue-50 m-w-full"
         value={inputText}
         onFocus={() => setInputText("")}
         onChange={handleChange}
