@@ -99,13 +99,9 @@ function PlaylistInput(props) {
         disabled={isProcessing}
       />
       <div>
-        {isProcessing ? (
-          <div />
-        ) : (
-          <button id="submit-button" onClick={() => handleSubmit(onNotify)}>
-            Submit
-          </button>
-        )}
+        <button id="submit-button" onClick={() => handleSubmit(onNotify)}>
+          Submit
+        </button>
       </div>
     </div>
   );
