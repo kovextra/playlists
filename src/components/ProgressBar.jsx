@@ -8,7 +8,7 @@ function ProgressBar({ completed, total, title }) {
   }, [completed]);
 
   return (
-    <div id="outer-progress-bar" className="w-70 m-auto border-2 border-white ">
+    <div id="outer-progress-bar" className="w-72 m-auto border-2 border-white ">
       <div
         id="inner-progress-bar"
         className="border-blue-800 bg-emerald-200 transition-all duration-700"

@@ -96,6 +96,7 @@ function PlaylistInput(props) {
           if (e.key === "Enter") handleSubmit(onNotify);
         }}
         placeholder={defaultURL}
+        disabled={isProcessing}
       />
       <div>
         {isProcessing ? (

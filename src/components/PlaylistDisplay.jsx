@@ -13,7 +13,7 @@ function PlaylistDisplay({ playlistData }) {
       </h1>
       <img
         id="playlist-image"
-        className="max-w-1/3 m-auto"
+        className="max-w-[33.333%] m-auto"
         src={playlistData.images[0].url}
       />
     </>
