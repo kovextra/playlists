@@ -15,7 +15,7 @@ function BandcampSourceTable({ trackData, totalCost }) {
       >
         <table
           id="track-table"
-          className="m-auto text-left table-auto border-2 border-separate rounded-t-lg"
+          className="m-auto text-left table-auto border-black border-2 border-separate rounded-t-lg"
         >
           <thead className="rounded-t-lg">
             <tr className="text-left sticky top:0 rounded-t-lg">
