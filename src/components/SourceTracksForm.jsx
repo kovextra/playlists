@@ -12,6 +12,7 @@ function SourceTracksForm({
   trackData,
 }) {
   const [showProgress, setShowProgress] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const sourceTrackForm = (
     <div id="source-tracks-page" className="form">
       <h1 className="sm:text-3xl md:text-5xl m-6 pt-15">
@@ -29,26 +30,32 @@ function SourceTracksForm({
       </select>
       <div id="source-details" className="middle">
         <div></div>
-        <button
-          id="source-tracks-button"
-          className="disabled:opacity-50 disabled:pointer-events-none w-l"
-          disabled={source == null || source === "Select Source"}
-          onClick={() => {
-            if (source === "YouTube") {
-              setShowProgress(true);
-              onSourceFromYoutube();
-            }
-            if (source === "Bandcamp") {
-              setNotification({
-                type: "good",
-                message: "Finding tracks on Bandcamp...",
-              });
-              onSourceFromBandcamp();
-            }
-          }}
-        >
-          Start Download
-        </button>
+        {isProcessing ? (
+          <div />
+        ) : (
+          <button
+            id="source-tracks-button"
+            className="disabled:opacity-50 disabled:pointer-events-none w-l"
+            disabled={source == null || source === "Select Source"}
+            onClick={() => {
+              if (source === "YouTube") {
+                setIsProcessing(true);
+                setShowProgress(true);
+                onSourceFromYoutube();
+              }
+              if (source === "Bandcamp") {
+                setIsProcessing(true);
+                setNotification({
+                  type: "good",
+                  message: "Finding tracks on Bandcamp...",
+                });
+                onSourceFromBandcamp();
+              }
+            }}
+          >
+            Start Download
+          </button>
+        )}
       </div>
       {showProgress ? (
         <div>

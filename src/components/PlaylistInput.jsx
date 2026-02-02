@@ -4,6 +4,7 @@ import { apiPull } from "../api";
 function PlaylistInput(props) {
   const defaultURL = "https://open.spotify.com/playlist/...";
   const [inputText, setInputText] = useState(defaultURL);
+  const [isProcessing, setIsProcessing] = useState(false);
   const { onSubmit, onNotify } = props;
   const inputRef = useRef();
 
@@ -21,6 +22,7 @@ function PlaylistInput(props) {
       });
       return;
     }
+    setIsProcessing(true);
 
     let playlistID = inputText.substring(inputText.indexOf("playlist") + 9);
     let queryIndex = playlistID.indexOf("?");
@@ -96,9 +98,13 @@ function PlaylistInput(props) {
         placeholder={defaultURL}
       />
       <div>
-        <button id="submit-button" onClick={() => handleSubmit(onNotify)}>
-          Submit
-        </button>
+        {isProcessing ? (
+          <div />
+        ) : (
+          <button id="submit-button" onClick={() => handleSubmit(onNotify)}>
+            Submit
+          </button>
+        )}
       </div>
     </div>
   );
