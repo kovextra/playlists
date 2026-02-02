@@ -103,6 +103,7 @@ function PlaylistInput(props) {
           id="submit-button"
           className="max-w-full min-w-0"
           onClick={() => handleSubmit(onNotify)}
+          disabled={isProcessing}
         >
           Submit
         </button>
