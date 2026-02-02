@@ -34,8 +34,6 @@ function PlaylistConverter() {
   const [bandcampTotalCost, setBandcampTotalCost] = useState(null);
   const [numberOfTracksLoaded, setNumberOfTracksLoaded] = useState(0);
 
-  const BACKEND_URL = "http://localhost:8081";
-
   function toggleTitle(val) {
     setHideTitle(!hideTitle);
   }
