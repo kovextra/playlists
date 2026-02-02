@@ -23,13 +23,13 @@ function PlaylistToolbar(props) {
       >
         Source Tracks
       </button>
-      <button
+      {/* <button
         id="transfer-playlist-button"
         className="playlist-buttons"
         onClick={() => clearNotificationsThenCall(onTransfer)}
       >
         Transfer Platform
-      </button>
+      </button> */}
     </div>
   );
 }
