@@ -51,13 +51,13 @@ function BandcampSourceTable({ trackData, totalCost }) {
         </table>
       </div>
       <h1 className="pt-10 sm:text-xl md:text-2xl">
-        <i>{message}</i>
+        <i>{totalCost != "$0.00" ? message : null}</i>
       </h1>
-      {totalCost ? (
+      {/* {totalCost ? (
         <button className="mt-8">
           <b>PURCHASE ALL FROM BANDCAMP</b>
         </button>
-      ) : null}
+      ) : null} */}
     </div>
   );
 

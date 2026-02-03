@@ -128,7 +128,7 @@ function PlaylistConverter() {
         message: "Downloading tracks",
       });
       await Promise.all(downloadPromises);
-      // then call to pull the whole compressed folder
+      // wait for all promises to resolve to proceed
       setNotification({
         type: "good",
         message: "Compressing playlist into zip folder...",

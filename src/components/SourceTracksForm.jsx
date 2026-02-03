@@ -25,7 +25,7 @@ function SourceTracksForm({
         onChange={onSelectionChange}
       >
         <option>Select Source</option>
-        <option>YouTube</option>
+        <option disabled>YouTube (Coming Soon)</option>
         <option>Bandcamp</option>
       </select>
       <div id="source-details" className="middle">
@@ -53,7 +53,7 @@ function SourceTracksForm({
               }
             }}
           >
-            Start Download
+            {source === "YouTube" ? "Download Songs" : "Find Songs"}
           </button>
         )}
       </div>
